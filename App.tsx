@@ -1,18 +1,12 @@
+import 'react-native-gesture-handler';
 import * as React from 'react';
 import {HomeScreen} from './components/HomeScreen';
-import { StyleSheet, Text, View } from 'react-native';
-import 'react-native-gesture-handler';
+import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { NoteScreen } from './components/NoteScreen';
 
 const Stack = createStackNavigator();
-
-
-export default function App() {
-  return (
-    <HomeScreen />
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -22,3 +16,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Note" component={NoteScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;

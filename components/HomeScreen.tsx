@@ -1,29 +1,15 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import {NotesList} from './NotesList'; 
+import { Button, Text, View, NavigatorIOS, StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { NavigationContainer, useLinkProps } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-export const HomeScreen = () => {
+export function HomeScreen() {
     return (
-        <Text>filler</Text>
-        /*
-            <HomeHeader/>
-            <HomeNotes>
-        */
+        <View>
+            <NotesList />
+        </View>
     );
-}
-
-//export default HomeScreen;
-
-const HomeHeader = () => {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
 }
