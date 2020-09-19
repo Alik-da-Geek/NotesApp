@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Button, Text, View, NavigatorIOS, StyleSheet, SafeAreaView, FlatList, ListRenderItemInfo, ListRenderItem, Dimensions} from 'react-native';
+import { Button, Text, View, NavigatorIOS, StyleSheet, SafeAreaView, FlatList, ListRenderItemInfo, ListRenderItem, Dimensions, TouchableHighlight } from 'react-native';
 import { NavigationContainer, useLinkProps } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { NotesListProps, NotesListState, Note, NoteItemProps } from '../types/Types';
 
-export class NotesList extends React.Component<any, NotesListState>{
-    constructor(props: any) {
+export class NotesList extends React.Component<NotesListProps, NotesListState>{
+    constructor(props: NotesListProps) {
         super(props);
         // TO DO --- get the state from local storage, and also make sure to save it there
         var note1 = this.createNote(1, "Groceries", "lettuce, tomatoes, cucumbers, olive oil, salt")
@@ -22,8 +23,10 @@ export class NotesList extends React.Component<any, NotesListState>{
     }
 
     renderNote: ListRenderItem<Note> = (item: ListRenderItemInfo<Note>) => (
-        <NoteItem title={item.item.title} id={item.item.id} />
-        //TO DO --- add onPress function here
+        <NoteItem
+            note={item.item}
+            onOpenNote={this.props.onOpenNote}
+        />
     );
 
     render() {
@@ -41,25 +44,12 @@ export class NotesList extends React.Component<any, NotesListState>{
 }
 
 const NoteItem = (props: NoteItemProps) => (
-    <View style={styles.noteItem}>
-        <Text style={styles.noteItemTitle}>{props.title}</Text>
-    </View>
+    <TouchableHighlight onPress={() => props.onOpenNote(props.note)} underlayColor="white">
+        <View style={styles.noteItem}>
+            <Text style={styles.noteItemTitle}>{props.note.title}</Text>
+        </View>
+    </TouchableHighlight>
 );
-
-type Note = {
-    id: number;
-    title: string;
-    text: string;
-}
-
-type NoteItemProps = {
-    title: string;
-    id: number;
-}
-
-type NotesListState = {
-    notes: Note[];
-}
 
 const styles = StyleSheet.create({
     noteItem: {
